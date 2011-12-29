@@ -1,0 +1,72 @@
+What is ioniced? 
+-------------------
+
+It's a very simple daemon to set the io scheduling class and priority for processes
+while running them. That's done by ionice (http://www.kernel.org/pub/linux/utils/util-linux/)
+Please read the man page of ionice before using this tool.
+
+Use ioniced at your _OWN_ risk!
+You must agree before using ioniced.
+
+
+How it works?
+-------------
+
+It scans /proc for new PIDs. After looking into /proc/pid/exec and
+/proc/pid/status to get the process' name it looks into it's config and runs 
+ionice if neccassary. 
+
+Currently it looks into /proc every 2 seconds (default; use [-u sec] to 
+overwrite).  Is there a better way to get notified when a process is started?
+Let me know!
+
+
+How to get it running?
+----------------------
+
+Install ionice into PATH.
+Unpack ionice tarball.
+Compile via "make".
+Install via "make install" into /usr/bin.
+Run "ioniced -h" to get a quick overview about command line options.
+Now go and configure (see below). 
+
+
+How to configure?
+-----------------
+
+Place an ioniced.conf in /etc with following format:
+  [%group:|user:]   program-name    ionice parameter
+
+# Note:
+#   Rules are parsed from top downwards. The first rule matches is valid!
+
+# WARNING: 
+#   Adding programms without absolute paths could be used to make your computer
+#   unusable!
+
+# WARNING:
+#   Wildcards are also valid for directories!
+
+Settings per user or group are supported.
+
+Look at example/ioniced.conf for more information and more examples.
+
+
+Credits
+-------
+This program is a copy of schedtoold (http://www.darav.de/schedtoold.html) 
+and it has the same functionality but for io scheduler.
+Many thanks to Rietzschel Carsten.
+
+ioniced can be found here: https://code.google.com/p/ioniced/ 
+
+
+Please
+------
+
+Please feel free to send BUG reports (I'm sure you'll find some), suggestions 
+and comments.
+
+
+
