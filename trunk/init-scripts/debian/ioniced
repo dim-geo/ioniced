@@ -1,0 +1,26 @@
+#!/bin/sh
+# Start/stop the ionice daemon ioniced.
+
+BINARY=/usr/bin/ioniced
+
+test -f $BINARY || exit 0
+
+case "$1" in
+start)  echo -n "Starting ionice daemon: ioniced"
+        start-stop-daemon --start --quiet --exec $BINARY
+        echo "."
+        ;;
+stop)   echo -n "Stopping ionice daemon: ioniced"
+        start-stop-daemon --stop --quiet --exec $BINARY
+        echo "."
+        ;;
+restart) echo -n "Restarting ionice daemon: ioniced"
+        start-stop-daemon --stop --quiet --exec $BINARY
+        start-stop-daemon --start --quiet --exec $BINARY
+        echo "."
+        ;;
+*)      echo "Usage: /etc/init.d/ioniced start|stop|restart"
+        exit 1
+        ;;
+esac
+exit 0
